@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Swagger UI</title>
+  <title>MaRS API</title>
   <link rel="icon" type="image/png" href="images/favicon-32x32.png" sizes="32x32" />
   <link rel="icon" type="image/png" href="images/favicon-16x16.png" sizes="16x16" />
   <link href='css/typography.css' media='screen' rel='stylesheet' type='text/css'/>
@@ -26,7 +26,7 @@
       if (url && url.length > 1) {
         url = decodeURIComponent(url[1]);
       } else {
-        url = "http://petstore.swagger.io/v2/swagger.json";
+        url = "https://marsapiamg/v1/docs/swagger.json";
       }
       window.swaggerUi = new SwaggerUi({
         url: url,
@@ -53,25 +53,29 @@
         sorter : "alpha"
       });
 
-      function addApiKeyAuthorization() {
-        var key = encodeURIComponent($('#input_apiKey')[0].value);
-        log("key: " + key);
+      /*function addApiKeyAuthorization() {
+        //var key = encodeURIComponent($('#input_apiKey')[0].value);
+        var key = userpass; //$('#input_apiKey')[0].value;
+        //log("key: " + key);
         if(key && key.trim() != "") {
-            var apiKeyAuth = new SwaggerClient.ApiKeyAuthorization("api_key", key, "query");
-            window.swaggerUi.api.clientAuthorizations.add("api_key", apiKeyAuth);
-            log("added key " + key);
+            //var apiKeyAuth = new SwaggerClient.ApiKeyAuthorization("api_key", key, "header");
+            //var apiKeyAuth = new SwaggerClient.ApiKeyAuthorization("Authorization", "Basic " + window.btoa(key), "header");
+            //window.swaggerUi.api.clientAuthorizations.add("api_key", apiKeyAuth);
+            //log("added key " + key);
+
+			//window.swaggerUi.api.clientAuthorizations.add("api_key", new SwaggerClient.ApiKeyAuthorization("Authorization", "Basic " + window.btoa(key), "header"));
+			//window.authorizations.add("api_key", new SwaggerClient.ApiKeyAuthorization("Authorization", "Basic " + window.btoa(key), "header"));
         }
       }
 
-      $('#input_apiKey').change(addApiKeyAuthorization);
+      //$('#input_apiKey').change(addApiKeyAuthorization);
 
       // if you have an apiKey you would like to pre-populate on the page for demonstration purposes...
-      /*
-        var apiKey = "myApiKeyXXXX123456789";
-        $('#input_apiKey').val(apiKey);
-        addApiKeyAuthorization();
-      */
-
+      //var apiKey = "amgtesting:user";
+      //$('#input_apiKey').val(apiKey);
+      //addApiKeyAuthorization();
+	*/
+	  
       window.swaggerUi.load();
 
       function log() {
@@ -84,17 +88,31 @@
 </head>
 
 <body class="swagger-section">
+<!--
 <div id='header'>
   <div class="swagger-ui-wrap">
-    <a id="logo" href="http://swagger.io">swagger</a>
+    <a id="logo" href=".">MaRS API</a>
     <form id='api_selector'>
+	  
       <div class='input'><input placeholder="http://example.com/api" id="input_baseUrl" name="baseUrl" type="text"/></div>
       <div class='input'><input placeholder="api_key" id="input_apiKey" name="apiKey" type="text"/></div>
       <div class='input'><a id="explore" href="#">Explore</a></div>
+      <div class='input'>
+		<span style="color: white; font-weight:bold;">Credentials:</span> 
+		<input placeholder="credentials" id="input_apiKey" name="apiKey" type="password"/>
+	  </div>
+	  
     </form>
   </div>
 </div>
 
+<div class="swagger-ui-wrap">
+	<div class="main-copy">
+		<p>The panel below displays documentation for all endpoints, parameters and error messages available to the MaRS API.  For a more detailed explanation of API structure, please read the full <a href="/documentation/getting_started" style="text-decoration: underline;">documentation</a>.</p>
+		<p>If you have an API key, you can also test API calls directly from this panel.  Just log-in to your Marvel account and your key will be pre-filled. (If you don't have a key, <a href="/signup" style="text-decoration: underline;">get one now</a>.)</p>
+	</div>
+</div>
+-->
 <div id="message-bar" class="swagger-ui-wrap">&nbsp;</div>
 <div id="swagger-ui-container" class="swagger-ui-wrap"></div>
 </body>

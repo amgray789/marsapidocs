@@ -1,0 +1,2216 @@
+{
+	"swagger" : "2.0",
+	"info" : {
+		"title" : "MaRS API v1",
+		"description" : "The panel below displays documentation for all endpoints, parameters and error messages available to the MaRS API. For a more detailed explanation of API structure, please read the full documentation. If you have an API key, you can also test API calls directly from this panel. Just log-in to your Access Point account and your key will be pre-filled. (If you don't have a key, get one now.) The MaRS API is available for use by USP developers. Please contact MaRS API Support to gain access. \n--\n\n**NOTE: All date values are in the form** `YYYY-MM-DDTHH:mm:SSE(D|S)T`",
+		"version" : "1.0.0",
+		"contact" : {
+			"email" : "Anthony Gray <amg@usp.org>"
+		}
+	},
+	"host" : "marsapiamg",
+	"basePath" : "/",
+	"tags" : [{
+			"name" : "committee"
+		}, {
+			"name" : "dosage form"
+		}, {
+			"name" : "erratum"
+		}, {
+			"name" : "family"
+		}, {
+			"name" : "monograph"
+		}, {
+			"name" : "publication"
+		}, {
+			"name" : "reagent"
+		}, {
+			"name" : "reference standard"
+		}, {
+			"name" : "rsrequest"
+		}, {
+			"name" : "workflow"
+		}
+	],
+	"schemes" : ["https"],
+	"paths" : {
+		"/v1/publicationservice/publications" : {
+			"get" : {
+				"tags" : ["publication"],
+				"summary" : "List all publications",
+				"operationId" : "listPublications",
+				"consumes" : ["application/json"],
+				"produces" : ["application/json", "application/xml"],
+				"responses" : {
+					"200" : {
+						"schema" : {
+							"$ref" : "#/definitions/Publications"
+						}
+					},
+					"400" : {
+						"description" : "Bad request - invalid format",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"500" : {
+						"description" : "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/v1/publicationservice/publications/{id}" : {
+			"get" : {
+				"tags" : ["publication"],
+				"summary" : "Get a publication by id",
+				"operationId" : "getPublicationById",
+				"produces" : ["application/json", "application/xml"],
+				"parameters" : [{
+						"name" : "id",
+						"in" : "path",
+						"description" : "Unique publication identifier",
+						"required" : true,
+						"type" : "integer",
+						"format" : "int32"
+					}
+				],
+				"responses" : {
+					"200" : {
+						"schema" : {
+							"$ref" : "#/definitions/Publication"
+						}
+					},
+					"400" : {
+						"description" : "Bad request - invalid format",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"404" : {
+						"description" : "Resource not found",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"500" : {
+						"description" : "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/v1/publicationservice/publications/filter" : {
+			"get" : {
+				"tags" : ["publication"],
+				"summary" : "Filtered list of publications",
+				"description" : "To list **ACTIVE** publications ONLY: set `fieldName`=inactive and `term`=0",
+				"operationId" : "filterPublications",
+				"consumes" : ["application/json"],
+				"produces" : ["application/json", "application/xml"],
+				"parameters" : [{
+						"in" : "query",
+						"name" : "fieldName",
+						"description" : "The field name in which the term will be searched for. Valid value(s): [`publication`, `inactive`].",
+						"type" : "string",
+						"required" : true
+					}, {
+						"in" : "query",
+						"name" : "term",
+						"description" : "The term to be searched for",
+						"type" : "string",
+						"required" : true
+					}
+				],
+				"responses" : {
+					"200" : {
+						"schema" : {
+							"$ref" : "#/definitions/Publications"
+						}
+					},
+					"400" : {
+						"description" : "Bad request - invalid format",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"404" : {
+						"description" : "Publication(s) not found",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"500" : {
+						"description" : "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/v1/dosageformservice/dosageforms" : {
+			"get" : {
+				"tags" : ["dosage form"],
+				"summary" : "List all dosage forms",
+				"operationId" : "listDosageForms",
+				"consumes" : ["application/json"],
+				"produces" : ["application/json", "application/xml"],
+				"responses" : {
+					"200" : {
+						"schema" : {
+							"$ref" : "#/definitions/Dosageforms"
+						}
+					},
+					"400" : {
+						"description" : "Bad request - invalid format",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"500" : {
+						"description" : "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/v1/dosageformservice/dosageforms/{id}" : {
+			"get" : {
+				"tags" : ["dosage form"],
+				"summary" : "Get a dosage form by id",
+				"operationId" : "getDosageFormById",
+				"produces" : ["application/json", "application/xml"],
+				"parameters" : [{
+						"name" : "id",
+						"in" : "path",
+						"description" : "Unique dosage form identifier",
+						"required" : true,
+						"type" : "integer",
+						"format" : "int32"
+					}
+				],
+				"responses" : {
+					"200" : {
+						"schema" : {
+							"$ref" : "#/definitions/Dosageform"
+						}
+					},
+					"400" : {
+						"description" : "Bad request - invalid format",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"404" : {
+						"description" : "Resource not found",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"500" : {
+						"description" : "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/v1/dosageformservice/dosageforms/filter" : {
+			"get" : {
+				"tags" : ["dosage form"],
+				"summary" : "Filtered list of dosage forms",
+				"operationId" : "filterDosageForms",
+				"consumes" : ["application/json"],
+				"produces" : ["application/json", "application/xml"],
+				"parameters" : [{
+						"in" : "query",
+						"name" : "fieldName",
+						"description" : "The field name in which the term will be searched for. Valid value(s): ['form']",
+						"type" : "string",
+						"required" : true
+					}, {
+						"in" : "query",
+						"name" : "term",
+						"description" : "The term to be searched for",
+						"type" : "string",
+						"required" : true
+					}
+				],
+				"responses" : {
+					"200" : {
+						"schema" : {
+							"$ref" : "#/definitions/Dosageforms"
+						}
+					},
+					"400" : {
+						"description" : "Bad request - invalid format",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"404" : {
+						"description" : "Publication(s) not found",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"500" : {
+						"description" : "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/v1/committeeservice/committees" : {
+			"get" : {
+				"tags" : ["committee"],
+				"summary" : "List all committees",
+				"operationId" : "listCommittees",
+				"consumes" : ["application/json"],
+				"produces" : ["application/json", "application/xml"],
+				"responses" : {
+					"200" : {
+						"schema" : {
+							"$ref" : "#/definitions/Committees"
+						}
+					},
+					"400" : {
+						"description" : "Bad request - invalid format",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"500" : {
+						"description" : "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/v1/committeeservice/committees/{id}" : {
+			"get" : {
+				"tags" : ["committee"],
+				"summary" : "Get a committee by id",
+				"operationId" : "getCommitteeById",
+				"produces" : ["application/json", "application/xml"],
+				"parameters" : [{
+						"name" : "id",
+						"in" : "path",
+						"description" : "Unique committee identifier",
+						"required" : true,
+						"type" : "integer",
+						"format" : "int32"
+					}
+				],
+				"responses" : {
+					"200" : {
+						"schema" : {
+							"$ref" : "#/definitions/Committee"
+						}
+					},
+					"400" : {
+						"description" : "Bad request - invalid format",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"404" : {
+						"description" : "Resource not found",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"500" : {
+						"description" : "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/v1/committeeservice/committees/filter" : {
+			"get" : {
+				"tags" : ["committee"],
+				"summary" : "Filtered list of committees",
+				"operationId" : "filterCommittees",
+				"consumes" : ["application/json"],
+				"produces" : ["application/json", "application/xml"],
+				"parameters" : [{
+						"in" : "query",
+						"name" : "fieldName",
+						"description" : "The field name in which the term will be searched for. Valid value(s): ['code', 'name']",
+						"type" : "string",
+						"required" : true
+					}, {
+						"in" : "query",
+						"name" : "term",
+						"description" : "The term to be searched for",
+						"type" : "string",
+						"required" : true
+					}
+				],
+				"responses" : {
+					"200" : {
+						"schema" : {
+							"$ref" : "#/definitions/Committees"
+						}
+					},
+					"400" : {
+						"description" : "Bad request - invalid format",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"404" : {
+						"description" : "Publication(s) not found",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"500" : {
+						"description" : "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/v1/committeeservice/committees/active" : {
+			"get" : {
+				"tags" : ["committee"],
+				"summary" : "List of active committees",
+				"operationId" : "activeCommittees",
+				"consumes" : ["application/json"],
+				"produces" : ["application/json", "application/xml"],
+				"responses" : {
+					"200" : {
+						"schema" : {
+							"$ref" : "#/definitions/Committees"
+						}
+					},
+					"400" : {
+						"description" : "Bad request - invalid format",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"500" : {
+						"description" : "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/v1/refstdservice/refstds" : {
+			"get" : {
+				"tags" : ["reference standard"],
+				"summary" : "List all reference standards",
+				"operationId" : "listRefstds",
+				"consumes" : ["application/json"],
+				"produces" : ["application/json", "application/xml"],
+				"responses" : {
+					"200" : {
+						"schema" : {
+							"$ref" : "#/definitions/Refstds"
+						}
+					},
+					"400" : {
+						"description" : "Bad request - invalid format",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"500" : {
+						"description" : "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/v1/refstdservice/refstds/{itemNumber}" : {
+			"get" : {
+				"tags" : ["reference standard"],
+				"summary" : "Get a committee by item number",
+				"operationId" : "getRefstdByItemNumber",
+				"produces" : ["application/json", "application/xml"],
+				"parameters" : [{
+						"name" : "itemNumber",
+						"in" : "path",
+						"description" : "Unique reference standard identifier",
+						"required" : true,
+						"type" : "integer",
+						"format" : "int32"
+					}
+				],
+				"responses" : {
+					"200" : {
+						"schema" : {
+							"$ref" : "#/definitions/Refstd"
+						}
+					},
+					"400" : {
+						"description" : "Bad request - invalid format",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"404" : {
+						"description" : "Resource not found",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"500" : {
+						"description" : "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/v1/refstdservice/refstds/filter" : {
+			"get" : {
+				"tags" : ["reference standard"],
+				"summary" : "Filtered list of reference standards",
+				"operationId" : "filterRefstds",
+				"consumes" : ["application/json"],
+				"produces" : ["application/json", "application/xml"],
+				"parameters" : [{
+						"in" : "query",
+						"name" : "fieldName",
+						"description" : "The field name in which the term will be searched for. Valid value(s): ['itemNumber', 'description']",
+						"type" : "string",
+						"required" : true
+					}, {
+						"in" : "query",
+						"name" : "term",
+						"description" : "The term to be searched for",
+						"type" : "string",
+						"required" : true
+					}
+				],
+				"responses" : {
+					"200" : {
+						"schema" : {
+							"$ref" : "#/definitions/Refstds"
+						}
+					},
+					"400" : {
+						"description" : "Bad request - invalid format",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"404" : {
+						"description" : "Publication(s) not found",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"500" : {
+						"description" : "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/v1/reagentservice/reagents" : {
+			"get" : {
+				"tags" : ["reagent"],
+				"summary" : "List all reagents",
+				"operationId" : "listReagents",
+				"consumes" : ["application/json"],
+				"produces" : ["application/json", "application/xml"],
+				"responses" : {
+					"200" : {
+						"schema" : {
+							"$ref" : "#/definitions/Reagents"
+						}
+					},
+					"400" : {
+						"description" : "Bad request - invalid format",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"500" : {
+						"description" : "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/v1/reagentservice/reagents/{id}" : {
+			"get" : {
+				"tags" : ["reagent"],
+				"summary" : "Get a reagent by Id",
+				"operationId" : "getReagentById",
+				"produces" : ["application/json", "application/xml"],
+				"parameters" : [{
+						"name" : "id",
+						"in" : "path",
+						"description" : "Unique reagent identifier",
+						"required" : true,
+						"type" : "integer",
+						"format" : "int32"
+					}
+				],
+				"responses" : {
+					"200" : {
+						"schema" : {
+							"$ref" : "#/definitions/Reagent"
+						}
+					},
+					"400" : {
+						"description" : "Bad request - invalid format",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"404" : {
+						"description" : "Resource not found",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"500" : {
+						"description" : "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/v1/reagentservice/reagents/filter" : {
+			"get" : {
+				"tags" : ["reagent"],
+				"summary" : "Filtered list of reagents",
+				"operationId" : "filterReagents",
+				"consumes" : ["application/json"],
+				"produces" : ["application/json", "application/xml"],
+				"parameters" : [{
+						"in" : "query",
+						"name" : "fieldName",
+						"description" : "The field name in which the term will be searched for. Valid value(s): ['itemNumber', 'description']",
+						"type" : "string",
+						"required" : true
+					}, {
+						"in" : "query",
+						"name" : "term",
+						"description" : "The term to be searched for",
+						"type" : "string",
+						"required" : true
+					}
+				],
+				"responses" : {
+					"200" : {
+						"schema" : {
+							"$ref" : "#/definitions/Reagents"
+						}
+					},
+					"400" : {
+						"description" : "Bad request - invalid format",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"404" : {
+						"description" : "Publication(s) not found",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"500" : {
+						"description" : "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/v1/erratumservice/erratum" : {
+			"get" : {
+				"tags" : ["erratum"],
+				"summary" : "List all erratums",
+				"operationId" : "listErratums",
+				"consumes" : ["application/json"],
+				"produces" : ["application/json", "application/xml"],
+				"responses" : {
+					"200" : {
+						"schema" : {
+							"$ref" : "#/definitions/Erratums"
+						}
+					},
+					"400" : {
+						"description" : "Bad request - invalid format",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"500" : {
+						"description" : "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/v1/erratumservice/erratums/{id}" : {
+			"get" : {
+				"tags" : ["erratum"],
+				"summary" : "Get a erratum by Id",
+				"operationId" : "getErratumById",
+				"produces" : ["application/json", "application/xml"],
+				"parameters" : [{
+						"name" : "id",
+						"in" : "path",
+						"description" : "Unique erratum identifier",
+						"required" : true,
+						"type" : "integer",
+						"format" : "int32"
+					}
+				],
+				"responses" : {
+					"200" : {
+						"schema" : {
+							"$ref" : "#/definitions/Erratum"
+						}
+					},
+					"400" : {
+						"description" : "Bad request - invalid format",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"404" : {
+						"description" : "Resource not found",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"500" : {
+						"description" : "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/v1/erratumservice/erratums/{xmlId}" : {
+			"get" : {
+				"tags" : ["erratum"],
+				"summary" : "Get a erratum by XML Id",
+				"operationId" : "getErratumByXmlId",
+				"produces" : ["application/json", "application/xml"],
+				"parameters" : [{
+						"name" : "id",
+						"in" : "path",
+						"description" : "Unique erratum XML identifier",
+						"required" : true,
+						"type" : "string"
+					}
+				],
+				"responses" : {
+					"200" : {
+						"schema" : {
+							"$ref" : "#/definitions/Erratum"
+						}
+					},
+					"400" : {
+						"description" : "Bad request - invalid format",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"404" : {
+						"description" : "Resource not found",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"500" : {
+						"description" : "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/v1/erratumservice/erratums/filter" : {
+			"get" : {
+				"tags" : ["erratum"],
+				"summary" : "Filtered list of erratums",
+				"description" : "**fieldName** valid value(s): [`xmlId`, `formattedMonoTitle`, `errataIdDate`, `officialDate`, `postingDate`, `loadDate`, `section`, `sourcePublication`, `sourcePageNumber`, `targetPrintPublication`, `targetOnlinePublication`, `description`, `published`]",
+				"operationId" : "filterErratums",
+				"consumes" : ["application/json"],
+				"produces" : ["application/json", "application/xml"],
+				"parameters" : [{
+						"in" : "query",
+						"name" : "fieldName",
+						"description" : "The field name in which the term will be searched for.",
+						"type" : "string",
+						"required" : true
+					}, {
+						"in" : "query",
+						"name" : "term",
+						"description" : "The term to be searched for",
+						"type" : "string",
+						"required" : true
+					}
+				],
+				"responses" : {
+					"200" : {
+						"schema" : {
+							"$ref" : "#/definitions/Erratums"
+						}
+					},
+					"400" : {
+						"description" : "Bad request - invalid format",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"404" : {
+						"description" : "Erratum(s) not found",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"500" : {
+						"description" : "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/v1/familyservice/families" : {
+			"get" : {
+				"tags" : ["family"],
+				"summary" : "List all families",
+				"operationId" : "listFamilies",
+				"consumes" : ["application/json"],
+				"produces" : ["application/json", "application/xml"],
+				"responses" : {
+					"200" : {
+						"schema" : {
+							"$ref" : "#/definitions/Families"
+						}
+					},
+					"400" : {
+						"description" : "Bad request - invalid format",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"500" : {
+						"description" : "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/v1/familyservice/families/{id}" : {
+			"get" : {
+				"tags" : ["family"],
+				"summary" : "Get a family by id",
+				"operationId" : "getFamilyById",
+				"produces" : ["application/json", "application/xml"],
+				"parameters" : [{
+						"name" : "id",
+						"in" : "path",
+						"description" : "Unique family identifier",
+						"required" : true,
+						"type" : "integer",
+						"format" : "int32"
+					}
+				],
+				"responses" : {
+					"200" : {
+						"schema" : {
+							"$ref" : "#/definitions/Family"
+						}
+					},
+					"400" : {
+						"description" : "Bad request - invalid format",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"404" : {
+						"description" : "Resource not found",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"500" : {
+						"description" : "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/v1/familyservice/families/filter" : {
+			"get" : {
+				"tags" : ["family"],
+				"summary" : "Filtered list of families",
+				"description" : "Valid `fieldName` values: [`familyName`, `createDate`, `modifyDate`].",
+				"operationId" : "filterFamilies",
+				"consumes" : ["application/json"],
+				"produces" : ["application/json", "application/xml"],
+				"parameters" : [{
+						"in" : "query",
+						"name" : "fieldName",
+						"description" : "The field name in which the term will be searched for.",
+						"type" : "string",
+						"required" : true
+					}, {
+						"in" : "query",
+						"name" : "term",
+						"description" : "The term to be searched for",
+						"type" : "string",
+						"required" : true
+					}
+				],
+				"responses" : {
+					"200" : {
+						"schema" : {
+							"$ref" : "#/definitions/Families"
+						}
+					},
+					"400" : {
+						"description" : "Bad request - invalid format",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"404" : {
+						"description" : "Family(s) not found",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"500" : {
+						"description" : "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/v1/familyservice/familymonographassocs" : {
+			"get" : {
+				"tags" : ["family", "monograph"],
+				"summary" : "List all family monograph associations",
+				"operationId" : "listFamilyMonographAssocs",
+				"consumes" : ["application/json"],
+				"produces" : ["application/json", "application/xml"],
+				"responses" : {
+					"200" : {
+						"schema" : {
+							"$ref" : "#/definitions/FamilyMonographAssocs"
+						}
+					},
+					"400" : {
+						"description" : "Bad request - invalid format",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"500" : {
+						"description" : "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/v1/familyservice/familymonographassocs/{id}" : {
+			"get" : {
+				"tags" : ["family", "monograph"],
+				"summary" : "Get a family monograph association by id",
+				"operationId" : "getFamilyMonographAssocById",
+				"produces" : ["application/json", "application/xml"],
+				"parameters" : [{
+						"name" : "id",
+						"in" : "path",
+						"description" : "Unique family monograph assoication identifier",
+						"required" : true,
+						"type" : "integer",
+						"format" : "int32"
+					}
+				],
+				"responses" : {
+					"200" : {
+						"schema" : {
+							"$ref" : "#/definitions/FamilyMonographAssoc"
+						}
+					},
+					"400" : {
+						"description" : "Bad request - invalid format",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"404" : {
+						"description" : "Resource not found",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"500" : {
+						"description" : "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/v1/familyservice/familymonographassocs/filter" : {
+			"get" : {
+				"tags" : ["family", "monograph"],
+				"summary" : "Filtered list of family monograph associations",
+				"description" : "Valid `fieldName` values: [`familyUri`, `monographUri`, `createDate`].",
+				"operationId" : "filterFamilyMonographAssocs",
+				"consumes" : ["application/json"],
+				"produces" : ["application/json", "application/xml"],
+				"parameters" : [{
+						"in" : "query",
+						"name" : "fieldName",
+						"description" : "The field name in which the term will be searched for.",
+						"type" : "string",
+						"required" : true
+					}, {
+						"in" : "query",
+						"name" : "term",
+						"description" : "The term to be searched for",
+						"type" : "string",
+						"required" : true
+					}
+				],
+				"responses" : {
+					"200" : {
+						"schema" : {
+							"$ref" : "#/definitions/FamilyMonographAssocs"
+						}
+					},
+					"400" : {
+						"description" : "Bad request - invalid format",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"404" : {
+						"description" : "Family(s) not found",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"500" : {
+						"description" : "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/v1/workflowservice/workflows/{revisionId}" : {
+			"get" : {
+				"tags" : ["workflow"],
+				"summary" : "Get a workflow by revision Id",
+				"operationId" : "getWorkflowByRevisionId",
+				"consumes" : ["application/json"],
+				"produces" : ["application/json", "application/xml"],
+				"parameters" : [{
+						"in" : "path",
+						"name" : "revisionId",
+						"description" : "Revision Id of the workflow",
+						"type" : "integer",
+						"format" : "int32",
+						"required" : true
+					}
+				],
+				"responses" : {
+					"200" : {
+						"schema" : {
+							"$ref" : "#/definitions/Workflow"
+						}
+					},
+					"400" : {
+						"description" : "Bad request - invalid format",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"404" : {
+						"description" : "Workflow not found",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"500" : {
+						"description" : "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/v1/workflowservice/workflows/{workflowNumber}" : {
+			"get" : {
+				"tags" : ["workflow"],
+				"summary" : "Get a workflow by workflow number",
+				"operationId" : "getWorkflowByWorkflowNumber",
+				"consumes" : ["application/json"],
+				"produces" : ["application/json", "application/xml"],
+				"parameters" : [{
+						"in" : "path",
+						"name" : "workflowNumber",
+						"description" : "Unique workflow number for the workflow",
+						"type" : "string",
+						"required" : true
+					}
+				],
+				"responses" : {
+					"200" : {
+						"schema" : {
+							"$ref" : "#/definitions/Workflow"
+						}
+					},
+					"400" : {
+						"description" : "Bad request - invalid format",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"404" : {
+						"description" : "Workflow not found",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"500" : {
+						"description" : "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/v1/workflowservice/workflows/{revisionId}/monographs" : {
+			"get" : {
+				"tags" : ["workflow", "monograph"],
+				"summary" : "Get associated monograph from workflow by unique revision Id",
+				"description" : "This resource will always return an array with one monograph.",
+				"operationId" : "getMonographByRevisionId",
+				"consumes" : ["application/json"],
+				"produces" : ["application/json", "application/xml"],
+				"parameters" : [{
+						"in" : "path",
+						"name" : "revisionId",
+						"description" : "Unique Revision ID of the workflow",
+						"type" : "integer",
+						"format" : "int32",
+						"required" : true
+					}
+				],
+				"responses" : {
+					"200" : {
+						"schema" : {
+							"$ref" : "#/definitions/Monographs"
+						}
+					},
+					"400" : {
+						"description" : "Bad request - invalid format",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"404" : {
+						"description" : "Workflow not found",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"500" : {
+						"description" : "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/v1/workflowservice/workflows/{workflowNumber}/monographs" : {
+			"get" : {
+				"tags" : ["workflow", "monograph"],
+				"summary" : "Get associated monograph from workflow by workflow number",
+				"description" : "This resource will always return an array with one monograph.",
+				"operationId" : "getMonographByWorkflowNumber",
+				"consumes" : ["application/json"],
+				"produces" : ["application/json", "application/xml"],
+				"parameters" : [{
+						"in" : "path",
+						"name" : "workflowNumber",
+						"description" : "workflow number of the workflow",
+						"type" : "string",
+						"required" : true
+					}
+				],
+				"responses" : {
+					"200" : {
+						"schema" : {
+							"$ref" : "#/definitions/Monographs"
+						}
+					},
+					"400" : {
+						"description" : "Bad request - invalid format",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"404" : {
+						"description" : "Workflow not found",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"500" : {
+						"description" : "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/v1/workflowservice/workflows/{revisionId}/rsrequests" : {
+			"get" : {
+				"tags" : ["workflow", "rsrequest"],
+				"summary" : "Get associated RS requests from workflow by revision Id",
+				"description" : "",
+				"operationId" : "getRSRequestsByRevisionId",
+				"consumes" : ["application/json"],
+				"produces" : ["application/json", "application/xml"],
+				"parameters" : [{
+						"in" : "path",
+						"name" : "revisionId",
+						"description" : "workflow number of the workflow",
+						"type" : "integer",
+						"format" : "int32",
+						"required" : true
+					}
+				],
+				"responses" : {
+					"200" : {
+						"schema" : {
+							"$ref" : "#/definitions/RSRequests"
+						}
+					},
+					"400" : {
+						"description" : "Bad request - invalid format",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"404" : {
+						"description" : "Workflow not found or no RS requests",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"500" : {
+						"description" : "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/v1/workflowservice/workflows/{workflowNumber}/rsrequests" : {
+			"get" : {
+				"tags" : ["workflow", "rsrequest"],
+				"summary" : "Get associated RS requests from workflow by workflow number",
+				"description" : "",
+				"operationId" : "getRSRequestsByWorkflowNumber",
+				"consumes" : ["application/json"],
+				"produces" : ["application/json", "application/xml"],
+				"parameters" : [{
+						"in" : "path",
+						"name" : "workflowNumber",
+						"description" : "workflow number of the workflow",
+						"type" : "string",
+						"required" : true
+					}
+				],
+				"responses" : {
+					"200" : {
+						"schema" : {
+							"$ref" : "#/definitions/RSRequests"
+						}
+					},
+					"400" : {
+						"description" : "Bad request - invalid format",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"404" : {
+						"description" : "Workflow not found or no RS requests",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"500" : {
+						"description" : "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/v1/workflowservice/workflows/{revisionId}/rsrequests/filter" : {
+			"get" : {
+				"tags" : ["workflow", "rsrequest"],
+				"summary" : "Filtered list of RS requests",
+				"description" : "Valid value(s): [`familyName`, `createDate`, `modifyDate`].",
+				"operationId" : "filterRSRequestsByRevisionId",
+				"consumes" : ["application/json"],
+				"produces" : ["application/json", "application/xml"],
+				"parameters" : [{
+						"in" : "path",
+						"name" : "revisionId",
+						"description" : "revision id of the workflow",
+						"type" : "integer",
+						"format" : "int32",
+						"required" : true
+					}, {
+						"in" : "query",
+						"name" : "fieldName",
+						"description" : "The field name in which the term will be searched for.",
+						"type" : "string",
+						"required" : true
+					}, {
+						"in" : "query",
+						"name" : "term",
+						"description" : "The term to be searched for",
+						"type" : "string",
+						"required" : true
+					}
+				],
+				"responses" : {
+					"200" : {
+						"schema" : {
+							"$ref" : "#/definitions/RSRequests"
+						}
+					},
+					"400" : {
+						"description" : "Bad request - invalid format",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"404" : {
+						"description" : "Family(s) not found",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"500" : {
+						"description" : "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/v1/workflowservice/workflows/{workflowNumber}/rsrequests/filter" : {
+			"get" : {
+				"tags" : ["workflow", "rsrequest"],
+				"summary" : "Filtered list of RS requests",
+				"description" : "Valid value(s): [`familyName`, `createDate`, `modifyDate`].",
+				"operationId" : "filterRSRequests",
+				"consumes" : ["application/json"],
+				"produces" : ["application/json", "application/xml"],
+				"parameters" : [{
+						"in" : "path",
+						"name" : "workflowNumber",
+						"description" : "workflow number of the workflow",
+						"type" : "string",
+						"required" : true
+					}, {
+						"in" : "query",
+						"name" : "fieldName",
+						"description" : "The field name in which the term will be searched for.",
+						"type" : "string",
+						"required" : true
+					}, {
+						"in" : "query",
+						"name" : "term",
+						"description" : "The term to be searched for",
+						"type" : "string",
+						"required" : true
+					}
+				],
+				"responses" : {
+					"200" : {
+						"schema" : {
+							"$ref" : "#/definitions/RSRequests"
+						}
+					},
+					"400" : {
+						"description" : "Bad request - invalid format",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"404" : {
+						"description" : "Family(s) not found",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"500" : {
+						"description" : "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/v1/monographservice/monographs" : {
+			"get" : {
+				"tags" : ["monograph"],
+				"summary" : "List all monographs",
+				"description" : "Note: This operation takes >60 seconds to complete",
+				"operationId" : "listMonographs",
+				"consumes" : ["application/json"],
+				"produces" : ["application/json", "application/xml"],
+				"responses" : {
+					"200" : {
+						"schema" : {
+							"$ref" : "#/definitions/Monographs"
+						}
+					},
+					"400" : {
+						"description" : "Bad request - invalid format",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"500" : {
+						"description" : "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/v1/monographservice/monographs/{mononum}" : {
+			"get" : {
+				"tags" : ["monograph"],
+				"summary" : "Get a monograph monograph number",
+				"operationId" : "getMonographById",
+				"produces" : ["application/json", "application/xml"],
+				"parameters" : [{
+						"name" : "mononum",
+						"in" : "path",
+						"description" : "Unique monograph identifier",
+						"required" : true,
+						"type" : "integer",
+						"format" : "int32"
+					}
+				],
+				"responses" : {
+					"200" : {
+						"schema" : {
+							"$ref" : "#/definitions/Monograph"
+						}
+					},
+					"400" : {
+						"description" : "Bad request - invalid format",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"404" : {
+						"description" : "Resource not found",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"500" : {
+						"description" : "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/v1/monographservice/monographs/filter" : {
+			"get" : {
+				"tags" : ["monograph"],
+				"summary" : "Filtered list of monographs",
+				"description" : "Valid `fieldName` values: [`familyUri`, `monographUri`, `createDate`].",
+				"operationId" : "filterMonographs",
+				"consumes" : ["application/json"],
+				"produces" : ["application/json", "application/xml"],
+				"parameters" : [{
+						"in" : "query",
+						"name" : "fieldName",
+						"description" : "The field name in which the term will be searched for.",
+						"type" : "string",
+						"required" : true
+					}, {
+						"in" : "query",
+						"name" : "term",
+						"description" : "The term to be searched for",
+						"type" : "string",
+						"required" : true
+					}
+				],
+				"responses" : {
+					"200" : {
+						"schema" : {
+							"$ref" : "#/definitions/Monographs"
+						}
+					},
+					"400" : {
+						"description" : "Bad request - invalid format",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"404" : {
+						"description" : "Monograph(s) not found",
+						"schema" : {
+							"$ref" : "#/definitions/Error"
+						}
+					},
+					"500" : {
+						"description" : "Internal Server Error"
+					}
+				}
+			}
+		}
+	},
+	"definitions" : {
+		"Person" : {
+			"properties" : {
+				"userId" : {
+					"type" : "integer",
+					"format" : "int32",
+					"description" : "MaRS unique identifier"
+				},
+				"kuafId" : {
+					"type" : "integer",
+					"format" : "int32",
+					"description" : "Livelink unique identifier"
+				},
+				"firstName" : {
+					"type" : "string",
+					"description" : "First name"
+				},
+				"middleName" : {
+					"type" : "string",
+					"description" : "Middle name"
+				},
+				"lastName" : {
+					"type" : "string",
+					"description" : "Last name"
+				},
+				"email" : {
+					"type" : "string",
+					"description" : "Email address"
+				},
+				"phoneNumber" : {
+					"type" : "string",
+					"description" : "phone number"
+				}
+			}
+		},
+		"MonographLite" : {
+			"properties" : {
+				"monoNum" : {
+					"type" : "integer",
+					"format" : "int32",
+					"description" : "monograph unique identifier"
+				},
+				"monoTitle" : {
+					"type" : "string",
+					"description" : "monograph title"
+				},
+				"sortKey" : {
+					"type" : "string",
+					"description" : "monograph sort key"
+				},
+				"uri" : {
+					"type" : "string",
+					"description" : "locator for this monograph"
+				}
+			}
+		},
+		"ReagentLite" : {
+			"properties" : {
+				"reagentNum" : {
+					"type" : "integer",
+					"format" : "int32",
+					"description" : "reagent unique identifier"
+				},
+				"reagentTitle" : {
+					"type" : "string",
+					"description" : "reagent title"
+				},
+				"reagentSortKey" : {
+					"type" : "string",
+					"description" : "reagent sort key"
+				},
+				"uri" : {
+					"type" : "string",
+					"description" : "locator for this reagent"
+				}
+			}
+		},
+		"WorkflowLite" : {
+			"properties" : {
+				"revisionId" : {
+					"type" : "integer",
+					"format" : "int32",
+					"description" : "workflow unique identifier"
+				},
+				"workflowNum" : {
+					"type" : "string",
+					"description" : "workflow number"
+				},
+				"monographUri" : {
+					"type" : "string",
+					"description" : "associated monograph locator"
+				},
+				"uri" : {
+					"type" : "string",
+					"description" : "locator for this workflow"
+				}
+			}
+		},
+		"FamilyLite" : {
+			"properties" : {
+				"familyId" : {
+					"type" : "integer",
+					"format" : "int32",
+					"description" : "family unique identifier"
+				},
+				"familyName" : {
+					"type" : "string",
+					"description" : "family name"
+				},
+				"uri" : {
+					"type" : "string",
+					"description" : "locator for this family"
+				}
+			}
+		},
+		"Language" : {
+			"properties" : {
+				"languageId" : {
+					"type" : "integer",
+					"format" : "int32",
+					"description" : "language unique identifier"
+				},
+				"language" : {
+					"type" : "string",
+					"description" : "language name"
+				}
+			}
+		},
+		"Publication" : {
+			"properties" : {
+				"id" : {
+					"type" : "integer",
+					"format" : "int32"
+				},
+				"publication" : {
+					"type" : "string"
+				},
+				"inactive" : {
+					"type" : "string"
+				},
+				"uri" : {
+					"type" : "string"
+				}
+			}
+		},
+		"Publications" : {
+			"properties" : {
+				"count" : {
+					"type" : "integer",
+					"format" : "int32"
+				},
+				"records" : {
+					"type" : "array",
+					"items" : {
+						"$ref" : "#/definitions/Publication"
+					}
+				}
+			}
+		},
+		"Dosageforms" : {
+			"properties" : {
+				"count" : {
+					"type" : "integer",
+					"format" : "int32"
+				},
+				"records" : {
+					"type" : "array",
+					"items" : {
+						"$ref" : "#/definitions/Dosageform"
+					}
+				}
+			}
+		},
+		"Dosageform" : {
+			"properties" : {
+				"id" : {
+					"type" : "integer",
+					"format" : "int64",
+					"description" : "unique identifier for the dosage form"
+				},
+				"form" : {
+					"type" : "string",
+					"description" : "dosage form full name"
+				},
+				"uri" : {
+					"type" : "string",
+					"description" : "locator for this dosage form"
+				}
+			}
+		},
+		"Committees" : {
+			"properties" : {
+				"count" : {
+					"type" : "integer",
+					"format" : "int64",
+					"description" : "number of objects in the 'records' array"
+				},
+				"records" : {
+					"type" : "array",
+					"description" : "list of committee objects",
+					"items" : {
+						"$ref" : "#/definitions/Committee"
+					}
+				}
+			}
+		},
+		"Committee" : {
+			"properties" : {
+				"id" : {
+					"type" : "integer",
+					"format" : "int64",
+					"description" : "unique identifier for the committee"
+				},
+				"code" : {
+					"type" : "string",
+					"description" : "committee code"
+				},
+				"name" : {
+					"type" : "string",
+					"description" : "full committee name"
+				},
+				"inactive" : {
+					"type" : "integer",
+					"format" : "int32",
+					"minimum" : "0.0",
+					"maximum" : "1.0",
+					"description" : "committee inactive flag (0 | 1)"
+				},
+				"uri" : {
+					"type" : "string",
+					"description" : "locator for this committee"
+				}
+			}
+		},
+		"Refstds" : {
+			"properties" : {
+				"count" : {
+					"type" : "integer",
+					"format" : "int64",
+					"description" : "number of objects in the 'records' array"
+				},
+				"records" : {
+					"type" : "array",
+					"description" : "list of reference standard objects",
+					"items" : {
+						"$ref" : "#/definitions/Refstd"
+					}
+				}
+			}
+		},
+		"Refstd" : {
+			"properties" : {
+				"itemNumber" : {
+					"type" : "string",
+					"description" : "unique identifier for the reference standard"
+				},
+				"description" : {
+					"type" : "string",
+					"description" : "reference standard full name"
+				},
+				"uri" : {
+					"type" : "string",
+					"description" : "locator for this reference standard"
+				}
+			}
+		},
+		"Reagents" : {
+			"properties" : {
+				"count" : {
+					"type" : "integer",
+					"format" : "int64",
+					"description" : "number of objects in the 'records' array"
+				},
+				"records" : {
+					"type" : "array",
+					"description" : "list of reference standard objects",
+					"items" : {
+						"$ref" : "#/definitions/Reagent"
+					}
+				}
+			}
+		},
+		"Reagent" : {
+			"properties" : {
+				"reagentNum" : {
+					"type" : "integer",
+					"format" : "int32",
+					"description" : "reagent unique identifier"
+				},
+				"reagentTitle" : {
+					"type" : "string",
+					"description" : "reagent title"
+				},
+				"reagentSortKey" : {
+					"type" : "string",
+					"description" : "reagent USP sort key"
+				},
+				"casNumber" : {
+					"type" : "string",
+					"description" : "reagent CAS #"
+				},
+				"chemicalFormula" : {
+					"type" : "string",
+					"description" : "reagent chemical formula with Unicode characters"
+				},
+				"molecularWeight" : {
+					"type" : "string",
+					"description" : "reagent molecular weight"
+				},
+				"synonyms" : {
+					"type" : "string",
+					"description" : "reagent synonyms"
+				},
+				"sourceManufacturer" : {
+					"type" : "string",
+					"description" : "reagent manufacturer"
+				},
+				"reagentTypeId" : {
+					"type" : "integer",
+					"format" : "int32",
+					"description" : "reagent type identifier"
+				},
+				"reagentType" : {
+					"type" : "string",
+					"description" : "reagent type"
+				},
+				"uri" : {
+					"type" : "string",
+					"description" : "locator for this reagent"
+				},
+				"monograph" : {
+					"$ref" : "#/definitions/MonographLite"
+				},
+				"liaison" : {
+					"$ref" : "#/definitions/Person"
+				}
+			}
+		},
+		"Erratums" : {
+			"properties" : {
+				"count" : {
+					"type" : "integer",
+					"format" : "int64",
+					"description" : "number of objects in the 'records' array"
+				},
+				"records" : {
+					"type" : "array",
+					"description" : "list of reference standard objects",
+					"items" : {
+						"$ref" : "#/definitions/Erratum"
+					}
+				}
+			}
+		},
+		"Erratum" : {
+			"properties" : {
+				"id" : {
+					"type" : "integer",
+					"format" : "int32",
+					"description" : "reagent unique identifier"
+				},
+				"xmlId" : {
+					"type" : "string",
+					"description" : "foreign key to erratum entry in XML file"
+				},
+				"formattedMonoTitle" : {
+					"type" : "string",
+					"description" : "monograph title with HTML formatting"
+				},
+				"errataIdDate" : {
+					"type" : "string",
+					"description" : "date this erratum was identified"
+				},
+				"officialDate" : {
+					"type" : "string",
+					"description" : "date this erratum becomes official"
+				},
+				"postingDate" : {
+					"type" : "string",
+					"description" : "date this erratum is posted"
+				},
+				"loadDate" : {
+					"type" : "string",
+					"description" : "date this erratum was loaded"
+				},
+				"section" : {
+					"type" : "string",
+					"description" : "section in which erratum is located"
+				},
+				"sourcePublication" : {
+					"type" : "string",
+					"description" : "publication where erratum is located"
+				},
+				"sourcePageNumber" : {
+					"type" : "string",
+					"description" : "page number where erratum is located"
+				},
+				"targetPrintPublication" : {
+					"type" : "string",
+					"description" : "printed publication in which the correction will appear"
+				},
+				"targetOnlinePublication" : {
+					"type" : "string",
+					"description" : "online publication in which the correction will appear"
+				},
+				"description" : {
+					"type" : "string",
+					"description" : "correction details"
+				},
+				"published" : {
+					"type" : "string",
+					"description" : "published flag ['0' | '1']"
+				},
+				"uri" : {
+					"type" : "string",
+					"description" : "locator for this erratum"
+				},
+				"monograph" : {
+					"$ref" : "#/definitions/MonographLite"
+				},
+				"reagent" : {
+					"$ref" : "#/definitions/ReagentLite"
+				},
+				"workflow" : {
+					"$ref" : "#/definitions/WorkflowLite"
+				},
+				"publication" : {
+					"$ref" : "#/definitions/Publication"
+				},
+				"language" : {
+					"$ref" : "#/definitions/Language"
+				}
+			}
+		},
+		"Families" : {
+			"properties" : {
+				"count" : {
+					"type" : "integer",
+					"format" : "int64",
+					"description" : "number of objects in the 'records' array"
+				},
+				"records" : {
+					"type" : "array",
+					"description" : "list of family objects",
+					"items" : {
+						"$ref" : "#/definitions/Family"
+					}
+				}
+			}
+		},
+		"Family" : {
+			"properties" : {
+				"familyId" : {
+					"type" : "integer",
+					"format" : "int32",
+					"description" : "family unique identifier"
+				},
+				"familyName" : {
+					"type" : "string",
+					"description" : "foreign key to erratum entry in XML file"
+				},
+				"activeStatus" : {
+					"type" : "integer",
+					"format" : "int32",
+					"description" : "active flag [0 | 1]"
+				},
+				"createDate" : {
+					"type" : "string",
+					"description" : "date family was created"
+				},
+				"modifyDate" : {
+					"type" : "string",
+					"description" : "last date family was modified"
+				},
+				"uri" : {
+					"type" : "string",
+					"description" : "locator for this family"
+				},
+				"monographs" : {
+					"type" : "array",
+					"description" : "list of monograph objects",
+					"items" : {
+						"$ref" : "#/definitions/MonographLite"
+					}
+				}
+			}
+		},
+		"Workflow" : {
+			"properties" : {
+				"revisionId" : {
+					"type" : "integer",
+					"format" : "int32",
+					"description" : "workflow unique identifier"
+				},
+				"workflowNum" : {
+					"type" : "string",
+					"description" : "workflow number"
+				},
+				"uri" : {
+					"type" : "string",
+					"description" : "locator for this workflow"
+				},
+				"monographUri" : {
+					"type" : "string",
+					"description" : "locator for the associated monograph"
+				}
+			}
+		},
+		"Monographs" : {
+			"properties" : {
+				"count" : {
+					"type" : "integer",
+					"format" : "int64",
+					"description" : "number of objects in the 'records' array"
+				},
+				"records" : {
+					"type" : "array",
+					"description" : "list of monograph objects",
+					"items" : {
+						"$ref" : "#/definitions/Monograph"
+					}
+				}
+			}
+		},
+		"Monograph" : {
+			"properties" : {
+				"monoNum" : {
+					"type" : "integer",
+					"format" : "int32",
+					"description" : "monograph unique identifier"
+				},
+				"monoTitle" : {
+					"type" : "string",
+					"description" : "monograph title"
+				},
+				"sortKey" : {
+					"type" : "string",
+					"description" : "monograph sort key"
+				},
+				"publication" : {
+					"$ref" : "#/definitions/Publication"
+				},
+				"modernizationBucket" : {
+					"type" : "string",
+					"description" : "Error message"
+				},
+				"modernizationState" : {
+					"type" : "string",
+					"description" : "Error message"
+				},
+				"lastMAAdminStatus" : {
+					"type" : "string",
+					"description" : "Error message"
+				},
+				"dosageForm" : {
+					"$ref" : "#/definitions/Dosageform"
+				},
+				"uri" : {
+					"type" : "string",
+					"description" : "locator for this monograph"
+				},
+				"committee" : {
+					"$ref" : "#/definitions/Committee"
+				},
+				"families" : {
+					"type" : "array",
+					"description" : "list of family objects",
+					"items" : {
+						"$ref" : "#/definitions/FamilyLite"
+					}
+				},
+				"priority" : {
+					"type" : "integer",
+					"format" : "int32",
+					"description" : "USP assigned priority value [0 - 4]"
+				},
+				"liaison" : {
+					"$ref" : "#/definitions/Person"
+				}
+			}
+		},
+		"RSRequests" : {
+			"properties" : {
+				"count" : {
+					"type" : "integer",
+					"format" : "int64",
+					"description" : "number of objects in the 'records' array"
+				},
+				"records" : {
+					"type" : "array",
+					"description" : "list of RS request objects",
+					"items" : {
+						"$ref" : "#/definitions/RSRequest"
+					}
+				}
+			}
+		},
+		"RSRequest" : {
+			"properties" : {
+				"id" : {
+					"type" : "integer",
+					"format" : "int32",
+					"description" : "RS request unique identifier"
+				},
+				"uri" : {
+					"type" : "string",
+					"description" : "locator for this RS request"
+				},
+				"active" : {
+					"type" : "integer",
+					"format" : "int32",
+					"description" : "active flag [0 | 1]"
+				},
+				"amountCommitted" : {
+					"type" : "string"
+				},
+				"analysisType" : {
+					"type" : "string"
+				},
+				"applicableTest" : {
+					"type" : "string"
+				},
+				"approvedFoodAdditive" : {
+					"type" : "string"
+				},
+				"casNumber" : {
+					"type" : "string"
+				},
+				"chemicalName" : {
+					"type" : "string"
+				},
+				"comments" : {
+					"type" : "string"
+				},
+				"controlledSubstance" : {
+					"type" : "string"
+				},
+				"grasSubstance" : {
+					"type" : "string"
+				},
+				"materialSource" : {
+					"type" : "string"
+				},
+				"notifyUser" : {
+					"type" : "integer",
+					"format" : "int32",
+					"description" : "notify user flag [0 | 1]"
+				},
+				"patentExpiry" : {
+					"type" : "string"
+				},
+				"patentHolder" : {
+					"type" : "string"
+				},
+				"proposedName" : {
+					"type" : "string"
+				},
+				"requestType" : {
+					"type" : "string"
+				},
+				"retractComments" : {
+					"type" : "string"
+				},
+				"material" : {
+					"type" : "string"
+				},
+				"unitOfMeasure" : {
+					"type" : "string"
+				},
+				"vendorCommitted" : {
+					"type" : "string"
+				},
+				"sponsor" : {
+					"$ref" : "#/definitions/Company"
+				},
+				"workflow" : {
+					"$ref" : "#/definitions/WorkflowLite"
+				},
+				"createDate" : {
+					"type" : "string"
+				},
+				"createdBy" : {
+					"$ref" : "#/definitions/Person"
+				},
+				"changedDate" : {
+					"type" : "string"
+				},
+				"changedBy" : {
+					"$ref" : "#/definitions/Person"
+				}
+
+			}
+		},
+		"Company" : {
+			"required" : ["name", "company", "address", "email", "phone"],
+			"properties" : {
+				"name" : {
+					"type" : "string",
+					"description" : "contact name"
+				},
+				"company" : {
+					"type" : "string",
+					"description" : "contact company name"
+				},
+				"address" : {
+					"type" : "string",
+					"description" : "contact mail address"
+				},
+				"email" : {
+					"type" : "string",
+					"description" : "contact email address"
+				},
+				"phone" : {
+					"type" : "string",
+					"description" : "contact phone"
+				}
+			}
+		},
+		"FamilyMonographAssocs" : {
+			"properties" : {
+				"count" : {
+					"type" : "integer",
+					"format" : "int64",
+					"description" : "number of objects in the 'records' array"
+				},
+				"records" : {
+					"type" : "array",
+					"description" : "list of family monograph association objects",
+					"items" : {
+						"$ref" : "#/definitions/FamilyMonographAssoc"
+					}
+				}
+			}
+		},
+
+		"FamilyMonographAssoc" : {
+			"properties" : {
+				"assocId" : {
+					"type" : "integer",
+					"format" : "int32",
+					"description" : "RS request unique identifier"
+				},
+
+				"familyId" : {
+					"type" : "integer",
+					"format" : "int32",
+					"description" : "family unique identifier"
+				},
+				"familyUri" : {
+					"type" : "string",
+					"description" : "locator for the associated family"
+				},
+				"monoNum" : {
+					"type" : "integer",
+					"format" : "int32",
+					"description" : "monograph unique identifier"
+				},
+				"monographUri" : {
+					"type" : "string",
+					"description" : "locator for the associated monograph"
+				},
+
+				"createDate" : {
+					"type" : "string",
+					"description" : "date association was created"
+				}
+			}
+		},
+		"Error" : {
+			"properties" : {
+				"id" : {
+					"type" : "integer",
+					"format" : "int32",
+					"description" : "Error identifier"
+				},
+				"message" : {
+					"type" : "string",
+					"description" : "Error message"
+				}
+			}
+		}
+	}
+}
